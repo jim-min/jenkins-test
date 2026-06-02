@@ -90,9 +90,11 @@ pipeline {
             echo '[!] Build or test failed. Running failure analyzer...'
             sh './Practice/scripts/analyze_failure.sh || true'
             archiveArtifacts artifacts: "${ANALYSIS_FILE}", allowEmptyArchive: true
-            mail to: env.NOTIFY_EMAIL,
-                 subject: "Jenkins Build Failed: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                 body: """StudentManager Java project build or test failed.
+            script {
+                try {
+                    mail to: env.NOTIFY_EMAIL,
+                         subject: "Jenkins Build Failed: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                         body: """StudentManager Java project build or test failed.
 
 Job: ${env.JOB_NAME}
 Build Number: ${env.BUILD_NUMBER}
@@ -102,6 +104,10 @@ Failure analysis file: ${env.ANALYSIS_FILE}
 
 Open the archived failure-analysis.txt artifact in Jenkins to see the detected cause and suggested fixes.
 """
+                } catch (err) {
+                    echo "Email notification failed. Configure Jenkins SMTP settings to send mail: ${err}"
+                }
+            }
         }
 
         success {
@@ -115,9 +121,11 @@ Result: SUCCESS
 """
             archiveArtifacts artifacts: "${SUCCESS_LOG_FILE}", allowEmptyArchive: false
             echo 'Build and test succeeded'
-            mail to: env.NOTIFY_EMAIL,
-                 subject: "Jenkins Build Success: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                 body: """StudentManager Java project build and test completed successfully.
+            script {
+                try {
+                    mail to: env.NOTIFY_EMAIL,
+                         subject: "Jenkins Build Success: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                         body: """StudentManager Java project build and test completed successfully.
 
 Job: ${env.JOB_NAME}
 Build Number: ${env.BUILD_NUMBER}
@@ -125,6 +133,10 @@ Build URL: ${env.BUILD_URL}
 Workspace: ${env.WORKSPACE}
 Success log file: ${env.SUCCESS_LOG_FILE}
 """
+                } catch (err) {
+                    echo "Email notification failed. Configure Jenkins SMTP settings to send mail: ${err}"
+                }
+            }
         }
     }
 }
