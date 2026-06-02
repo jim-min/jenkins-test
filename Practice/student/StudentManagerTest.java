@@ -1,18 +1,18 @@
-﻿package student;
+package student;
 
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
-import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestMethodOrder(OrderAnnotation.class)
 class StudentManagerTest {
-    private static StudentManager manager;
+    private StudentManager manager;
 
-    @BeforeAll
-    static void setUp() {
+    @BeforeEach
+    void setUp() {
         manager = new StudentManager();
     }
 
@@ -22,7 +22,7 @@ class StudentManagerTest {
         manager.addStudent("김지민");
 
         assertTrue(manager.hasStudent("김지민"), "학생이 정상적으로 추가되어야 합니다.");
-    
+
         manager.removeStudent("김지민");
 
         assertFalse(manager.hasStudent("김지민"), "학생이 정상적으로 제거되어야 합니다.");
