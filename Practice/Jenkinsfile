@@ -61,7 +61,7 @@ pipeline {
                 sh '''
                     echo "[+] Running StudentManager tests with JUnit..."
                     set +e
-                    java -jar ${JUNIT_JAR_PATH} execute \
+                    java -jar ${JUNIT_JAR_PATH} \
                         --class-path ${CLASS_DIR} \
                         --scan-class-path \
                         --details=tree \
