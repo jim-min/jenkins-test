@@ -1,9 +1,13 @@
-package student;
+﻿package student;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import static org.junit.jupiter.api.Assertions.*;
 
+@TestMethodOrder(OrderAnnotation.class)
 class StudentManagerTest {
     private static StudentManager manager;
 
@@ -13,6 +17,7 @@ class StudentManagerTest {
     }
 
     @Test
+    @Order(1)
     void testAddAndRemoveStudent() {
         manager.addStudent("김지민");
 
@@ -24,6 +29,7 @@ class StudentManagerTest {
     }
 
     @Test
+    @Order(2)
     void testDuplicateAddThrowsException() {
         manager.addStudent("김철수");
 
@@ -38,6 +44,7 @@ class StudentManagerTest {
     }
 
     @Test
+    @Order(3)
     void testRemoveNonExistentThrowsException() {
         IllegalArgumentException exception = assertThrows(
                 IllegalArgumentException.class,

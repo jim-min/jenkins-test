@@ -96,14 +96,14 @@ pipeline {
                          subject: "Jenkins Build Failed: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                          body: """StudentManager Java project build or test failed.
 
-Job: ${env.JOB_NAME}
-Build Number: ${env.BUILD_NUMBER}
-Build URL: ${env.BUILD_URL}
-Workspace: ${env.WORKSPACE}
-Failure analysis file: ${env.ANALYSIS_FILE}
+                    Job: ${env.JOB_NAME}
+                    Build Number: ${env.BUILD_NUMBER}
+                    Build URL: ${env.BUILD_URL}
+                    Workspace: ${env.WORKSPACE}
+                    Failure analysis file: ${env.ANALYSIS_FILE}
 
-Open the archived failure-analysis.txt artifact in Jenkins to see the detected cause and suggested fixes.
-"""
+                    Open the archived failure-analysis.txt artifact in Jenkins to see the detected cause and suggested fixes.
+                    """
                 } catch (err) {
                     echo "Email notification failed. Configure Jenkins SMTP settings to send mail: ${err}"
                 }
@@ -112,13 +112,13 @@ Open the archived failure-analysis.txt artifact in Jenkins to see the detected c
 
         success {
             writeFile file: env.SUCCESS_LOG_FILE, text: """Build and test succeeded
-Project: StudentManager
-Job: ${env.JOB_NAME}
-Build Number: ${env.BUILD_NUMBER}
-Build URL: ${env.BUILD_URL}
-Workspace: ${env.WORKSPACE}
-Result: SUCCESS
-"""
+                Project: StudentManager
+                Job: ${env.JOB_NAME}
+                Build Number: ${env.BUILD_NUMBER}
+                Build URL: ${env.BUILD_URL}
+                Workspace: ${env.WORKSPACE}
+                Result: SUCCESS
+                """
             archiveArtifacts artifacts: "${SUCCESS_LOG_FILE}", allowEmptyArchive: false
             echo 'Build and test succeeded'
             script {
@@ -127,12 +127,12 @@ Result: SUCCESS
                          subject: "Jenkins Build Success: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                          body: """StudentManager Java project build and test completed successfully.
 
-Job: ${env.JOB_NAME}
-Build Number: ${env.BUILD_NUMBER}
-Build URL: ${env.BUILD_URL}
-Workspace: ${env.WORKSPACE}
-Success log file: ${env.SUCCESS_LOG_FILE}
-"""
+                                Job: ${env.JOB_NAME}
+                                Build Number: ${env.BUILD_NUMBER}
+                                Build URL: ${env.BUILD_URL}
+                                Workspace: ${env.WORKSPACE}
+                                Success log file: ${env.SUCCESS_LOG_FILE}
+                                """
                 } catch (err) {
                     echo "Email notification failed. Configure Jenkins SMTP settings to send mail: ${err}"
                 }
