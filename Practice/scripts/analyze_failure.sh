@@ -35,7 +35,7 @@ mkdir -p "${REPORT_DIR}"
     elif [ -f "${TEST_LOG}" ] && grep -E "AssertionFailedError|expected:|but was:" "${TEST_LOG}" >/dev/null 2>&1; then
         echo "A JUnit assertion failed."
         echo "Fix: check whether StudentManager behavior or the expected test value is wrong."
-    elif [ -f "${TEST_LOG}" ] && grep -E "Exception|FAILED|failed" "${TEST_LOG}" >/dev/null 2>&1; then
+    elif [ -f "${TEST_LOG}" ] && grep -E "AssertionFailedError|TestExecutionException|FAILED|\\[ERROR\\]|\\[FAILURE\\]" "${TEST_LOG}" >/dev/null 2>&1; then
         echo "Tests ran, but at least one test failed or threw an exception."
         echo "Fix: inspect the failed test name and stack trace below."
     elif [ -f "${TEST_LOG}" ] && grep -E "0 tests found|0 tests started" "${TEST_LOG}" >/dev/null 2>&1; then
